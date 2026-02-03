@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { store } from "./store/store.js";
+import { store } from "./redux/store.js";
 import { Provider } from "react-redux";
 import './index.css'
 import App from './App.jsx'
