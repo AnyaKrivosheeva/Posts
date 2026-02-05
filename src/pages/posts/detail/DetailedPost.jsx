@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { INITIAL_POSTS } from "../PostsPage";
-import { useMemo } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getPost } from '../../../redux/slices/postsSlice';
 import Typo from "../../../components/Typo/Typo";
 import Container from "../../../components/Сontainer/Container";
 import * as SC from "./styles";
@@ -9,8 +10,12 @@ import Link from "../../../components/Link/Link";
 
 export default function DetailedPost() {
     const { id } = useParams();
-    const currentPost = useMemo(() => {
-        return INITIAL_POSTS.find((post) => post.id === Number(id));
+
+    const currentPost = useSelector((state) => state.posts.postForView);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getPost(Number(id)));
     }, [id]);
 
     if (!currentPost) {

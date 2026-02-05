@@ -1,31 +1,37 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Posts from "../../components/Posts/Posts";
 import Typo from "../../components/Typo/Typo";
 import Container from "../../components/Сontainer/Container";
+import { getLatestPosts } from '../../redux/slices/postsSlice';
 
-const INITIAL_POSTS = [
-    {
-        id: 1,
-        title: 'Post 1',
-        image: 'https://png.pngtree.com/thumb_back/fh260/background/20230610/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg',
-    },
-    {
-        id: 2,
-        title: 'Post 2',
-        image: 'https://png.pngtree.com/thumb_back/fh260/background/20230610/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg',
-    },
-    {
-        id: 3,
-        title: 'Post 3',
-        image: 'https://png.pngtree.com/thumb_back/fh260/background/20230610/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg',
-    },
-];
+
 
 export default function MainPage() {
+    const postForView = useSelector((state) => state.posts.postForView);
+    const latestPosts = useSelector((state) => state.posts.latestPosts);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLatestPosts());
+    }, []);
+
     return (
         <>
-            <Typo>Свежие публикации</Typo>
             <Container>
-                <Posts posts={INITIAL_POSTS} />
+                {latestPosts &&
+                    <>
+                        <Typo>Свежие публикации</Typo>
+                        <Posts posts={latestPosts} />
+                    </>
+                }
+                {postForView &&
+                    <>
+                        <Typo>Последний просмотренный пост</Typo>
+                        <Posts posts={[postForView]} />
+                    </>
+                }
             </Container>
         </>
     )
