@@ -3,15 +3,15 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { store } from "./redux/store.js";
 import { Provider } from "react-redux";
-import './index.css'
 import App from './App.jsx'
-import Posts from "./pages/posts/Posts.jsx";
+import PostsPage from "./pages/posts/PostsPage.jsx";
 import Root from "./components/Root/Root.jsx";
 import DetailedPost from "./pages/posts/detail/DetailedPost.jsx";
 import EditPost from "./pages/posts/edit/EditPost.jsx";
 import AddPost from "./pages/posts/add/AddPost.jsx";
-import Auth from "./pages/auth/Auth.jsx";
-import Registration from "./pages/registration/Registration.jsx";
+import AuthPage from "./pages/auth/AuthPage.jsx";
+import RegistrationPage from "./pages/registration/RegistrationPage.jsx";
+import './index.css';
 
 let router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ let router = createBrowserRouter([
       },
       {
         path: 'posts',
-        element: <Posts />
+        element: <PostsPage />
       },
       {
         path: 'posts/:id',
@@ -41,11 +41,11 @@ let router = createBrowserRouter([
       },
       {
         path: 'auth',
-        element: <Auth />
+        element: <AuthPage />
       },
       {
         path: 'registration',
-        element: <Registration />
+        element: <RegistrationPage />
       },
     ]
   },
