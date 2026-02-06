@@ -10,8 +10,10 @@ export default function PostsPage() {
     const { posts, loading } = useSelector((state) => state.posts.posts);
 
     useEffect(() => {
-        dispatch(getPosts());
-    }, []);
+        if (!posts) {
+            dispatch(getPosts());
+        }
+    }, [posts, dispatch]);
 
     if (!posts && loading) {
         return <Container>Loading...</Container>

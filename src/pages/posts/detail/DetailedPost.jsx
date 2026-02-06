@@ -5,18 +5,26 @@ import Typo from "../../../components/Typo/Typo";
 import Container from "../../../components/Сontainer/Container";
 import * as SC from "./styles";
 import Link from "../../../components/Link/Link";
-import { getPostById } from "../../../redux/slices/postsSlice";
+import { getPostById, showPost } from "../../../redux/slices/postsSlice";
 
 
 export default function DetailedPost() {
     const { id } = useParams();
 
+    const { posts } = useSelector((state) => state.posts.posts);
     const currentPost = useSelector((state) => state.posts.postForView);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getPostById(Number(id)));
-    }, [id]);
+        const intId = Number(id);
+        const foundedPost = posts ? posts.find((post) => post.id === intId) : undefined;
+
+        if (foundedPost) {
+            dispatch(showPost(foundedPost));
+        } else {
+            dispatch(getPostById(intId));
+        }
+    }, [id, posts, dispatch]);
 
     if (currentPost.loading) {
         return <Container>Loading...</Container>
@@ -37,6 +45,7 @@ export default function DetailedPost() {
             <div style={{ clear: 'both' }} />
             <SC.LinkWrapper>
                 <Link to='/posts'>Обратно к публикациям</Link>
+                <Link to={`/posts/${post.id}/edit`}>Редактировать пост</Link>
             </SC.LinkWrapper>
         </Container>
     )
