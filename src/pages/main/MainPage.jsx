@@ -8,8 +8,8 @@ import { getLatestPosts } from '../../redux/slices/postsSlice';
 
 
 export default function MainPage() {
-    const postForView = useSelector((state) => state.posts.postForView);
-    const latestPosts = useSelector((state) => state.posts.latestPosts);
+    const { post } = useSelector((state) => state.posts.postForView);
+    const { posts, loading } = useSelector((state) => state.posts.latestPosts);
 
     const dispatch = useDispatch();
 
@@ -20,16 +20,17 @@ export default function MainPage() {
     return (
         <>
             <Container>
-                {latestPosts &&
+                {loading && <Container>Loading...</Container>}
+                {posts &&
                     <>
                         <Typo>Свежие публикации</Typo>
-                        <Posts posts={latestPosts} />
+                        <Posts posts={posts} />
                     </>
                 }
-                {postForView &&
+                {post &&
                     <>
                         <Typo>Последний просмотренный пост</Typo>
-                        <Posts posts={[postForView]} />
+                        <Posts posts={[post]} />
                     </>
                 }
             </Container>
