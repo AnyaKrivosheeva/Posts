@@ -46,7 +46,9 @@ export const postsSlice = createSlice({
             // edit post
         },
         addPost(state, action) {
-            // add new post by data
+            const newPost = { ...action.payload };
+            newPost.id = new Date().getTime();
+            state.posts.posts = state.posts.posts ? [newPost, [...state.posts.posts]] : [newPost];
         },
     },
     extraReducers: (builder) => {

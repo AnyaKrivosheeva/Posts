@@ -1,3 +1,6 @@
+import PostForm from '../components/PostForm/PostForm';
+import * as SC from './styles';
+
 export default function AddPost() {
-    return <div>Cтраничка добавления поста</div>
+    return <PostForm />
 }
