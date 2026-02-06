@@ -2,15 +2,17 @@ import { useState } from "react";
 import Typo from "../../../../components/Typo/Typo";
 import Container from "../../../../components/Сontainer/Container";
 import * as SC from './styles';
-import { useDispatch } from "react-redux";
-import { addPost } from "../../../../redux/slices/postsSlice";
 
 const DEFAULT_VALUES = { title: '', body: '' };
 
-export default function PostForm() {
-    const [formValues, setFormValues] = useState(DEFAULT_VALUES);
+export default function PostForm(props) {
+    const {
+        title,
+        onSubmitForm,
+        defaultValues,
+    } = props;
 
-    const dispatch = useDispatch();
+    const [formValues, setFormValues] = useState(defaultValues || DEFAULT_VALUES);
 
     const onChange = (name, value) => {
         setFormValues({ ...formValues, [name]: value });
@@ -18,20 +20,22 @@ export default function PostForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(addPost(formValues));
-        setFormValues(DEFAULT_VALUES);
+        
+        onSubmitForm(formValues);
+
+        !defaultValues && setFormValues(DEFAULT_VALUES);
     };
 
     const disabled = !formValues.title.trim() || !formValues.body.trim();
 
     return (
         <Container>
-            <Typo>Добавление нового поста</Typo>
+            <Typo>{title}</Typo>
             <SC.Form onSubmit={onSubmit}>
                 <SC.Field>
                     <SC.Input
                         type="text"
-                        placeholder="Заголовок поста"
+                        placeholder="Заголовок"
                         name="title"
                         value={formValues.title}
                         onChange={(e) => onChange(e.target.name, e.target.value)}
